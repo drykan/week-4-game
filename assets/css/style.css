@@ -1,0 +1,88 @@
+@font-face {
+    font-family: FightClub;
+    src: url('../font/FIGHTT3_.ttf');
+}
+
+body {
+	background: #333;
+	font-family: Verdana, Geneva, sans-serif;
+}
+
+img {
+	max-width: 100%;
+}
+
+h1 {
+	font-family: FightClub;
+	font-weight: 900 !important;
+	font-size: 8em !important;
+	color: #ea66a2 !important;
+	text-shadow: -3px 3px #000;
+	margin-bottom: 0;
+	margin-top: 0;
+	text-align: center;
+}
+
+h3 {
+	font-size: 28px;
+	font-family: Verdana, Geneva, sans-serif;
+	margin-top: -5px;
+}
+
+h4 {
+	font-family: Verdana, Geneva, sans-serif;	
+	color: #fff;
+}
+
+.center {
+	text-align: center;
+}
+
+.jumbotron {
+	background: #222;
+	padding: 10px 0;
+}
+
+.jumbotron-text {
+	max-width: 360px;
+	margin: 0 auto;
+}
+
+.jumbotron p {
+	margin-top: -10px;
+	color: #999;
+}
+
+#charSelection {
+	max-width: 750px;
+	margin: 0 auto;
+	margin-bottom: 100px;
+}
+
+.characters {
+	background-color: #ea66a2;
+	text-align: center;
+	padding: 5px 0;
+	max-width: 158px;
+	margin: 0 auto;
+}
+
+.names {
+	font-family: FightClub;
+	font-size: 1.5em;
+}
+
+.combatarea {
+	color: #fff;
+	text-align: center;
+}
+
+#attack {
+	text-align: center;
+	margin: 50px 0;
+}
+
+
+
+
+

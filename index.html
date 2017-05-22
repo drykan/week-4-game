@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Week 4 - RPG Game</title>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+	<link href="https://fonts.googleapis.com/css?family=Alegreya+SC:400,900" rel="stylesheet">
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	<script type="text/javascript" src="assets/javascript/game.js"></script>
+
+</head>
+<body>
+
+	<header>
+		<div class="jumbotron">
+			<div class="jumbotron-text">
+				<h1>Fight Club</h1>
+				<h3>Mischief. Mayhem. Soap.</h3>
+				<p>an RPG</p>
+			</div>
+		</div>
+	</header>
+
+	<main class="container">
+		<!-- Directional Text -->
+		<div class="row center"><h4 class="col-md-12 directions"></h4></div>
+		<!-- Character choices and enemies left -->
+		<div id="charSelection" class="row"></div>
+		
+		<div class="row battleArea">
+			<!-- Player Section -->
+			<div class="col-md-4">
+				<p class="combatarea">Player</p>
+				<div id="player"></div>
+			</div>
+			<!-- Attack Button -->
+			<div id="attack" class="col-md-4">
+				<button type="button" value="Attack">Attack</button>
+				<div id="status"></div>
+			</div>
+			<!-- Computer Enemy Section -->
+			<div class="col-md-4">
+				<p class="combatarea">Enemy</p>
+				<div id="enemy"></div>
+			</div>
+		</div>
+	</main>
+
+
+</body>
+</html>
