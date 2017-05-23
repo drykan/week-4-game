@@ -25,30 +25,41 @@
 		</div>
 	</header>
 
-	<main class="container">
-		<!-- Directional Text -->
-		<div class="row center"><h4 class="col-md-12 directions"></h4></div>
-		<!-- Character choices and enemies left -->
-		<div id="charSelection" class="row"></div>
-		
-		<div class="row battleArea">
-			<!-- Player Section -->
-			<div class="col-md-4">
-				<p class="combatarea">Player</p>
-				<div id="player"></div>
-			</div>
-			<!-- Attack Button -->
-			<div id="attack" class="col-md-4">
-				<button type="button" value="Attack">Attack</button>
-				<div id="status"></div>
-			</div>
-			<!-- Computer Enemy Section -->
-			<div class="col-md-4">
-				<p class="combatarea">Enemy</p>
-				<div id="enemy"></div>
+	<main>
+
+		<div class="row">
+
+		<!-- Left Column: 
+		Character choices and enemies left -->
+
+		<div id="charSelection" class="col-md-2"></div>
+
+		<!-- Right Column:
+		Battle Area -->
+		<div class="col-md-10">
+			<!-- Directional Text -->
+			<div class="row center"><h4 class="col-md-12 directions"></h4></div>
+
+			<div class="row battleArea">
+				<!-- Player Section -->
+				<div class="col-md-4">
+					<p class="combatarea">Player</p>
+					<div id="player"></div>
+				</div>
+				<!-- Attack Button -->
+				<div class="attackWrapper col-md-4">
+					<img id="attack" src="assets/images/attack_btn.png">
+					<div id="status"></div>
+				</div>
+				<!-- Computer Enemy Section -->
+				<div class="col-md-4">
+					<p class="combatarea">Enemy</p>
+					<div id="enemy"></div>
+				</div>
 			</div>
 		</div>
-	</main>
+	</div>
+</main>
 
 
 </body>

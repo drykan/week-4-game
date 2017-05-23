@@ -40,7 +40,8 @@ h4 {
 
 .jumbotron {
 	background: #222;
-	padding: 10px 0;
+	padding: 5px 0;
+	margin-bottom: 0;
 }
 
 .jumbotron-text {
@@ -54,17 +55,38 @@ h4 {
 }
 
 #charSelection {
-	max-width: 750px;
 	margin: 0 auto;
 	margin-bottom: 100px;
+	background: #222;
+	height: 100vh;
 }
 
 .characters {
 	background-color: #ea66a2;
 	text-align: center;
-	padding: 5px 0;
-	max-width: 158px;
+	width: 158px;
+	margin: 0 auto 10px;
+}
+
+.characters p {
+	margin: 0;
+}
+
+.characters img {
+	max-width: 70%;
+}
+
+#player .characters, #enemy .characters {
 	margin: 0 auto;
+	padding: 5px 0;
+}
+
+#player .characters img, #enemy .characters img {
+	max-width: 100%;
+}
+
+.charWrapper, #enemy {
+	width: 100%;
 }
 
 .names {
@@ -77,9 +99,20 @@ h4 {
 	text-align: center;
 }
 
+.attackWrapper {
+	text-align: center;
+	margin-top: 30px;
+}
+
 #attack {
 	text-align: center;
-	margin: 50px 0;
+	margin: 25px 0;
+}
+
+#status {
+	padding: 20px;
+	color: #fff;
+	background: #666;
 }
 
 
