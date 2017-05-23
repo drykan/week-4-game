@@ -80,7 +80,6 @@ $(document).ready(function() {
 	}
 
 	$('.characters').click( function selectCharacters() {
-		console.log("have opponent before " + haveOpponent);
 		//When a character is selected, move the character to the player side
 		if(haveCharacter == false) {
 
@@ -100,8 +99,7 @@ $(document).ready(function() {
 			$('#status').html("");
 			$(".directions").html("Press attack to fight your opponent");
 			$("#attack").css("display", "initial");
-			console.log("have opponent after " + haveOpponent);
-			haveOpponent = true;
+			haveCharacter = true;
 		}
 
 	});
@@ -115,14 +113,16 @@ $(document).ready(function() {
 
 	}
 
+	//When the Attack Button is pressed
 	$("#attack").click( function() {
-
+		//do the math of the attacks and counter attacks
 		charArray[enemyChar].healthPoints  = charArray[enemyChar].healthPoints - charArray[myChar].attackPower; //Attack the opponent
 		charArray[myChar].healthPoints = charArray[myChar].healthPoints - charArray[enemyChar].attackPower;     //Counter attack back
 
+		//log when player or opponent dies
 		if (charArray[enemyChar].healthPoints <= 0) {
 			numEnemy--;
-			console.log("number if remaning enemy" + numEnemy);
+			console.log("number if remaining enemy" + numEnemy);
 			if(numEnemy > 0) {
 				$("#status").html("");
 				$("#enemy").remove();
@@ -139,7 +139,7 @@ $(document).ready(function() {
 		}
 		else if(charArray[myChar].healthPoints <= 0) {
 			messageHandler();
-			$("#status").html("You have lost. Please try again.")
+			$("#status").html("You have lost. Please try again.");
 			charHandler();
 		}
 		else {
