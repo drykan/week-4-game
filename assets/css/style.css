@@ -106,13 +106,12 @@ h4 {
 
 #attack {
 	text-align: center;
-	margin: 25px 0;
+	margin-bottom: 25px;
 }
 
 #status {
 	padding: 20px;
 	color: #fff;
-	background: #666;
 }
 
 
