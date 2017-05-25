@@ -1,9 +1,9 @@
-$(document).ready(function startGame() {
+$(document).ready(function() {
 	var myChar;
 	var enemyChar;
 	var choices;
 	var charArray;
-	var haveCharacter;
+	var haveChar;
 	var haveOpponent;
 	var numEnemy;  
 
@@ -56,14 +56,28 @@ $(document).ready(function startGame() {
 			" </div></div>";
 		}
 
-		$("#charSelection").html(choices);  			//loads the choices into the HTML div
-		$(".directions").html("Choose Your Fighter");   //Directions text reads to choose fighter (changes when a fighter is chosen)
+		$("#charSelection").html(choices);  //loads the choices into the HTML div
+		$(".directions").html("Choose Your Fighter");  //Directions text reads to choose fighter (changes when a fighter is chosen)
 		$("#attack").css("display","none");
-		$("#status").css("display","none");
 		
 	}
 
 	charHandler();
+
+	function fightersHandler() {
+
+		//Builds Div for player side and places selected character
+		var player = "<div class='col-xs-6 col-md-3 charWrapper'><div  id=" + charArray[myChar].id + " class='characters'><p class='names'>" + charArray[myChar].name + "</p><img src=" + charArray[myChar].image + "><br> HP: " + charArray[myChar].healthPoints +
+		" </div></div>";
+
+		//Builds Div for enemy side and places selected Character
+		var  opponent = "<div class='col-xs-6 col-md-3 charWrapper'><div class='characters' id=" + charArray[enemyChar].id +
+		"><p class='names'>" + charArray[enemyChar].name + "</p><img src=" + charArray[enemyChar].image + "><br> HP: " + charArray[enemyChar].healthPoints +
+		" </div></div>";
+
+		$("#player").html(player);
+		$("#enemy").html(opponent);	
+	}
 
 	$('.characters').click( function selectCharacters() {
 		//When a character is selected, move the character to the player side
@@ -71,30 +85,35 @@ $(document).ready(function startGame() {
 
 			myChar = $(this).attr('id');
 			$("#player").append(this);
-			console.log("Have Character1: " + haveCharacter);
 			haveCharacter = true;
-			console.log("Have Character1: " + haveCharacter);
 			$('#status').html("");
 			$(".directions").html("Choose your opponent!");
+			//selectCharacters();
 		}
 		
 		//When an Enemy is selected, move the enemy to the enemy side
 		else if(haveCharacter == true && haveOpponent == false && myChar !== $(this).attr('id')) {	
 
 			enemyChar = $(this).attr('id');
-			//$("#enemy").append(this);
+			$("#enemy").append(this);
 			$('#status').html("");
 			$(".directions").html("Press attack to fight your opponent");
 			$("#attack").css("display", "initial");
-			$("#status").css("display", "block");
-			haveOpponent = true;
 			console.log("Have Opponent: " + haveOpponent);
-			console.log("Have Character: " + haveCharacter);
-			$(this).appendTo("#enemy");
-			
+			$(enemyChar).appendTo("#enemy");
+			haveOpponent = true;
 		}
 
 	});
+
+	//description box populate
+	function messageHandler() {
+
+		var attack = "You attack " + charArray[enemyChar].name + " for " + charArray[myChar].attackPower + " damage!<br>" +
+		charArray[enemyChar].name + " counter attacks for " + charArray[enemyChar].attackPower;
+		$('#status').html(attack);
+
+	}
 
 	//When the Attack Button is pressed
 	$("#attack").click( function() {
@@ -113,40 +132,27 @@ $(document).ready(function startGame() {
 				$(".directions").html("Choose next Opponent");
 				haveOpponent = false;
 				haveCharacter = true;
-				console.log("Have Opponent after win: " + haveOpponent);
-				console.log("Have Character after win: " + haveCharacter);
-
+				//selectCharacters();
 			}
 			else {
 				$("#status").html("You Win!");
 				$(".directions").html("");
 				$("#player").remove();
-				startGame();
+				charHandler();
 			}
 		}
 		else if(charArray[myChar].healthPoints <= 0) {
 			messageHandler();
 			$("#status").html("You have lost. Please try again.");
-			startGame();
+			charHandler();
 		}
 		else {
 			messageHandler();
+			fightersHandler();
 		}
 
 		charArray[myChar].attackPower = charArray[myChar].attackPower + charArray[myChar].attackPower;
 	});
-
-	//description box populate
-	function messageHandler() {
-
-		var attack = "You attack " + charArray[enemyChar].name + " for " + charArray[myChar].attackPower + " damage!<br>" +
-		charArray[enemyChar].name + " counter attacks for " + charArray[enemyChar].attackPower;
-		$('#status').html(attack);
-
-	}
-
-
-	
 	
 });
 
