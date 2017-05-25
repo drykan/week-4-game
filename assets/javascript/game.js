@@ -1,19 +1,16 @@
-$(document).ready(function() {
-	var myChar;
-	var enemyChar;
-	var choices;
-	var charArray;
-	var haveChar;
-	var haveOpponent;
-	var numEnemy;  
+$(document).ready(function() { 
+
+var game = new charHandler();
 
 	function charHandler() {		//Sets all of the Character Attributes
 
-		myChar;
-		enemyChar;
-		haveCharacter = false;  	//default boolean of no character selected.
-		haveOpponent = false;		//default boolean of no enemy selected.
-		numEnemy = 3;				//default number of enemies remaining.
+		this.myChar;
+		this.enemyChar;
+		this.numEnemy;
+		this.haveCharacter = false;  	//default boolean of no character selected.
+		this.haveOpponent = false;		//default boolean of no enemy selected.
+		this.numEnemy = 3;
+		this.attackDmg;				//default number of enemies remaining.
 		choices = [];
 		charArray = [ {
 			id: 0,
@@ -62,18 +59,16 @@ $(document).ready(function() {
 		
 	}
 
-	charHandler();
+	
+	
 
 	function fightersHandler() {
 
 		//Builds Div for player side and places selected character
-		var player = "<div class='col-xs-6 col-md-3 charWrapper'><div  id=" + charArray[myChar].id + " class='characters'><p class='names'>" + charArray[myChar].name + "</p><img src=" + charArray[myChar].image + "><br> HP: " + charArray[myChar].healthPoints +
-		" </div></div>";
+		var player = "<div id='player1' class='col-xs-6 col-md-3 charWrapper'><div  id=" + charArray[game.myChar].id + " class='characters'><p class='names'>" + charArray[game.myChar].name + "</p><img src=" + charArray[game.myChar].image + "><br> HP: " + charArray[game.myChar].healthPoints + "</div></div>";
 
 		//Builds Div for enemy side and places selected Character
-		var  opponent = "<div class='col-xs-6 col-md-3 charWrapper'><div class='characters' id=" + charArray[enemyChar].id +
-		"><p class='names'>" + charArray[enemyChar].name + "</p><img src=" + charArray[enemyChar].image + "><br> HP: " + charArray[enemyChar].healthPoints +
-		" </div></div>";
+		var opponent = "<div id='opponent1' class='col-xs-6 col-md-3 charWrapper'><div class='characters' id=" + charArray[game.enemyChar].id + "><p class='names'>" + charArray[game.enemyChar].name + "</p><img src=" + charArray[game.enemyChar].image + "><br> HP: " + charArray[game.enemyChar].healthPoints + "</div></div>";
 
 		$("#player").html(player);
 		$("#enemy").html(opponent);	
@@ -81,78 +76,79 @@ $(document).ready(function() {
 
 	$('.characters').click( function selectCharacters() {
 		//When a character is selected, move the character to the player side
-		if(haveCharacter == false) {
+		if(game.haveCharacter == false) {
 
-			myChar = $(this).attr('id');
+			game.myChar = $(this).attr('id');
 			$("#player").append(this);
-			haveCharacter = true;
+			game.haveCharacter = true;
 			$('#status').html("");
 			$(".directions").html("Choose your opponent!");
 			//selectCharacters();
 		}
 		
 		//When an Enemy is selected, move the enemy to the enemy side
-		else if(haveCharacter == true && haveOpponent == false && myChar !== $(this).attr('id')) {	
+		else if(game.haveCharacter == true && game.haveOpponent == false && game.myChar !== $(this).attr('id')) {	
 
-			enemyChar = $(this).attr('id');
+			game.enemyChar = $(this).attr('id');
 			$("#enemy").append(this);
 			$('#status').html("");
 			$(".directions").html("Press attack to fight your opponent");
 			$("#attack").css("display", "initial");
-			console.log("Have Opponent: " + haveOpponent);
-			$(enemyChar).appendTo("#enemy");
-			haveOpponent = true;
+			console.log("Have Opponent: " + game.haveOpponent);
+			game.haveOpponent = true;
 		}
 
 	});
+
+	//When the Attack Button is pressed
+	$("#attack").click( function() {
+		if(game.haveOpponent == true && game.haveCharacter == true) {
+			//do the math of the attacks and counter attacks
+			charArray[game.enemyChar].healthPoints  = charArray[game.enemyChar].healthPoints - charArray[game.myChar].attackPower; //Attack the opponent
+			charArray[game.myChar].healthPoints = charArray[game.myChar].healthPoints - charArray[game.enemyChar].attackPower;     //Counter attack back
+
+			//log when player or opponent dies
+			if (charArray[game.enemyChar].healthPoints <= 0) {
+				console.log("number if remaining enemy1: " + game.numEnemy);
+				game.numEnemy--;
+				console.log("number if remaining enemy2: " + game.numEnemy);
+				if(game.numEnemy > 0) {
+					$("#status").html("");
+					$("#opponent1").remove();
+					$(".directions").html("Choose next Opponent");
+					game.haveOpponent = false;
+					game.haveCharacter = true;
+				}
+				else {
+					$("#status").html("You Win!");
+					$(".directions").html("");
+					$("#player1").remove();	
+					$("#opponent1").remove();
+				}
+			}
+			else if(charArray[game.myChar].healthPoints <= 0) {
+				messageHandler();
+				$("#status").html("You have lost. Please try again.");
+				
+			}
+			else {
+				messageHandler();  	//send message of attack data
+				fightersHandler();	//send updated healthPoints to each character
+			}
+
+			charArray[game.myChar].attackPower = charArray[game.myChar].attackPower + 6;
+		}
+	});
+
 
 	//description box populate
 	function messageHandler() {
 
-		var attack = "You attack " + charArray[enemyChar].name + " for " + charArray[myChar].attackPower + " damage!<br>" +
-		charArray[enemyChar].name + " counter attacks for " + charArray[enemyChar].attackPower;
+		var attack = "You attack " + charArray[game.enemyChar].name + " for " + charArray[game.myChar].attackPower + " damage!<br>" +
+		charArray[game.enemyChar].name + " counter attacks for " + charArray[game.enemyChar].attackPower;
 		$('#status').html(attack);
 
 	}
-
-	//When the Attack Button is pressed
-	$("#attack").click( function() {
-		//do the math of the attacks and counter attacks
-		charArray[enemyChar].healthPoints  = charArray[enemyChar].healthPoints - charArray[myChar].attackPower; //Attack the opponent
-		charArray[myChar].healthPoints = charArray[myChar].healthPoints - charArray[enemyChar].attackPower;     //Counter attack back
-
-		//log when player or opponent dies
-		if (charArray[enemyChar].healthPoints <= 0) {
-			console.log("number if remaining enemy1: " + numEnemy);
-			numEnemy--;
-			console.log("number if remaining enemy2: " + numEnemy);
-			if(numEnemy > 0) {
-				$("#status").html("");
-				$("#enemy").remove();
-				$(".directions").html("Choose next Opponent");
-				haveOpponent = false;
-				haveCharacter = true;
-				//selectCharacters();
-			}
-			else {
-				$("#status").html("You Win!");
-				$(".directions").html("");
-				$("#player").remove();
-				charHandler();
-			}
-		}
-		else if(charArray[myChar].healthPoints <= 0) {
-			messageHandler();
-			$("#status").html("You have lost. Please try again.");
-			charHandler();
-		}
-		else {
-			messageHandler();
-			fightersHandler();
-		}
-
-		charArray[myChar].attackPower = charArray[myChar].attackPower + charArray[myChar].attackPower;
-	});
 	
 });
 
