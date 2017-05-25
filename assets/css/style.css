@@ -56,9 +56,10 @@ h4 {
 
 #charSelection {
 	margin: 0 auto;
-	margin-bottom: 100px;
 	background: #222;
 	height: 100vh;
+	padding-top: 203px;
+	margin-top: -203px;
 }
 
 .characters {
