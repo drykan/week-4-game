@@ -56,6 +56,8 @@ var game = new charHandler();
 		$("#charSelection").html(choices);  //loads the choices into the HTML div
 		$(".directions").html("Choose Your Fighter");  //Directions text reads to choose fighter (changes when a fighter is chosen)
 		$("#attack").css("display","none");
+		$("#resetButton").css("display","none");
+		selectCharacters();
 		
 	}
 
@@ -74,38 +76,41 @@ var game = new charHandler();
 		$("#enemy").html(opponent);	
 	}
 
-	$('.characters').click( function selectCharacters() {
-		//When a character is selected, move the character to the player side
-		if(game.haveCharacter == false) {
+	function selectCharacters() {
+		$('.characters').click( function() {
+			//When a character is selected, move the character to the player side
+			if(game.haveCharacter == false) {
 
-			game.myChar = $(this).attr('id');
-			$("#player").append(this);
-			game.haveCharacter = true;
-			$('#status').html("");
-			$(".directions").html("Choose your opponent!");
-			//selectCharacters();
-		}
-		
-		//When an Enemy is selected, move the enemy to the enemy side
-		else if(game.haveCharacter == true && game.haveOpponent == false && game.myChar !== $(this).attr('id')) {	
+				game.myChar = $(this).attr('id');
+				$("#player").append(this);
+				game.haveCharacter = true;
+				$('#status').html("");
+				$(".directions").html("Choose your opponent!");
+				console.log("Setting: " + game.myChar + " as your character");
+			}
+			
+			//When an Enemy is selected, move the enemy to the enemy side
+			else if(game.haveCharacter == true && game.haveOpponent == false && game.myChar !== $(this).attr('id')) {	
 
-			game.enemyChar = $(this).attr('id');
-			$("#enemy").append(this);
-			$('#status').html("");
-			$(".directions").html("Press attack to fight your opponent");
-			$("#attack").css("display", "initial");
-			console.log("Have Opponent: " + game.haveOpponent);
-			game.haveOpponent = true;
-		}
+				game.enemyChar = $(this).attr('id');
+				$("#enemy").append(this);
+				$('#status').html("");
+				$(".directions").html("Press attack to fight your opponent");
+				$("#attack").css("display", "initial");
+				console.log("Have Opponent: " + game.haveOpponent);
+				game.haveOpponent = true;
+				console.log("Setting: " + game.myChar + " as your opponent");
+			}
 
-	});
+		});
+	}
 
 	//When the Attack Button is pressed
 	$("#attack").click( function() {
 		if(game.haveOpponent == true && game.haveCharacter == true) {
 			//do the math of the attacks and counter attacks
-			charArray[game.enemyChar].healthPoints  = charArray[game.enemyChar].healthPoints - charArray[game.myChar].attackPower; //Attack the opponent
-			charArray[game.myChar].healthPoints = charArray[game.myChar].healthPoints - charArray[game.enemyChar].attackPower;     //Counter attack back
+			charArray[game.enemyChar].healthPoints  -= charArray[game.myChar].attackPower;	//Attack the opponent
+			charArray[game.myChar].healthPoints -= charArray[game.enemyChar].attackPower;	//Counter attack back
 
 			//log when player or opponent dies
 			if (charArray[game.enemyChar].healthPoints <= 0) {
@@ -124,11 +129,15 @@ var game = new charHandler();
 					$(".directions").html("");
 					$("#player1").remove();	
 					$("#opponent1").remove();
+					$("#attack").css("display","none");
+					$("#resetButton").css("display", "initial");
 				}
 			}
 			else if(charArray[game.myChar].healthPoints <= 0) {
 				messageHandler();
 				$("#status").html("You have lost. Please try again.");
+				$("#attack").css("display","none");
+				$("#resetButton").css("display", "initial");
 				
 			}
 			else {
@@ -141,6 +150,7 @@ var game = new charHandler();
 	});
 
 
+
 	//description box populate
 	function messageHandler() {
 
@@ -149,7 +159,15 @@ var game = new charHandler();
 		$('#status').html(attack);
 
 	}
-	
+
+	$("#resetButton").click( function() {
+		$("#status").html("");
+		game = new charHandler();
+		selectCharacters();
+		console.log("hay0");
+		console.log("have character: " + game.haveCharacter);
+	})
+	selectCharacters();
 });
 
 
