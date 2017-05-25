@@ -104,7 +104,7 @@ h4 {
 	margin-top: 30px;
 }
 
-#attack {
+#attack, #resetButton {
 	text-align: center;
 	margin-bottom: 25px;
 }
