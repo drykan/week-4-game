@@ -18,28 +18,28 @@ var game = new charHandler();
 			image: 'assets/images/bob.png',
 			healthPoints: 100,
 			attackPower: 15,
-			counterAttack: 8
+			counterAttack: 20
 		}, {
 			id: 1,
 			name: "Marla Singer",
 			image: 'assets/images/marla.png',
 			healthPoints: 120,
 			attackPower: 12,
-			counterAttack: 11	
+			counterAttack: 17	
 		}, {
 			id: 2,
 			name: "The Narrator",
 			image: 'assets/images/narrator.png',
 			healthPoints: 150,
 			attackPower: 9,
-			counterAttack: 13
+			counterAttack: 15
 		}, {
 			id: 3,
 			name: "Tyler Durden",
 			image: 'assets/images/tyler.png',
 			healthPoints: 180,
 			attackPower: 6,
-			counterAttack: 15
+			counterAttack: 10
 		} ];
 
 
@@ -67,7 +67,7 @@ var game = new charHandler();
 	function fightersHandler() {
 
 		//Builds Div for player side and places selected character
-		var player = "<div id='player1' class='col-xs-6 col-md-3 charWrapper'><div  id=" + charArray[game.myChar].id + " class='characters'><p class='names'>" + charArray[game.myChar].name + "</p><img src=" + charArray[game.myChar].image + "><br> HP: " + charArray[game.myChar].healthPoints + "</div></div>";
+		var player = "<div id='player1' class='col-xs-6 col-md-3 charWrapper'><div id=" + charArray[game.myChar].id + " class='characters'><p class='names'>" + charArray[game.myChar].name + "</p><img src=" + charArray[game.myChar].image + "><br> HP: " + charArray[game.myChar].healthPoints + "</div></div>";
 
 		//Builds Div for enemy side and places selected Character
 		var opponent = "<div id='opponent1' class='col-xs-6 col-md-3 charWrapper'><div class='characters' id=" + charArray[game.enemyChar].id + "><p class='names'>" + charArray[game.enemyChar].name + "</p><img src=" + charArray[game.enemyChar].image + "><br> HP: " + charArray[game.enemyChar].healthPoints + "</div></div>";
@@ -110,7 +110,7 @@ var game = new charHandler();
 		if(game.haveOpponent == true && game.haveCharacter == true) {
 			//do the math of the attacks and counter attacks
 			charArray[game.enemyChar].healthPoints  -= charArray[game.myChar].attackPower;	//Attack the opponent
-			charArray[game.myChar].healthPoints -= charArray[game.enemyChar].attackPower;	//Counter attack back
+			charArray[game.myChar].healthPoints -= charArray[game.enemyChar].counterAttack;	//Counter attack back
 
 			//log when player or opponent dies
 			if (charArray[game.enemyChar].healthPoints <= 0) {
@@ -127,8 +127,6 @@ var game = new charHandler();
 				else {
 					$("#status").html("You Win!");
 					$(".directions").html("");
-					$("#player1").remove();	
-					$("#opponent1").remove();
 					$("#attack").css("display","none");
 					$("#resetButton").css("display", "initial");
 				}
@@ -155,16 +153,17 @@ var game = new charHandler();
 	function messageHandler() {
 
 		var attack = "You attack " + charArray[game.enemyChar].name + " for " + charArray[game.myChar].attackPower + " damage!<br>" +
-		charArray[game.enemyChar].name + " counter attacks for " + charArray[game.enemyChar].attackPower;
+		charArray[game.enemyChar].name + " counter attacks for " + charArray[game.enemyChar].counterAttack;
 		$('#status').html(attack);
 
 	}
 
 	$("#resetButton").click( function() {
 		$("#status").html("");
+		$("#player1").remove();	
+		$("#enemy").empty();
 		game = new charHandler();
 		selectCharacters();
-		console.log("hay0");
 		console.log("have character: " + game.haveCharacter);
 	})
 	selectCharacters();
